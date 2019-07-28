@@ -1,2 +1,2 @@
 # withAngular
-api with get and post
+Basic api with simple crud mappings
