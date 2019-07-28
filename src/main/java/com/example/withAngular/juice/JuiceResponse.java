@@ -1,25 +1,27 @@
 package com.example.withAngular.juice;
 
 public class JuiceResponse {
-   private String responseString = "";
-   private String responseCode = "";
-   public JuiceResponse withResponseCode(String responseCode) {
-       this.responseCode = responseCode;
-       return this;
-   }
-   public JuiceResponse withResponseString(String responseString) {
-       this.responseString = responseString;
-       return this;
-   }
-   public JuiceResponse build() {
-       return this;
-   }
+   private String responseString ;
+   private String responseCode ;
 
-    @Override
-    public String toString() {
-        return "JuiceResponse{" +
-                "responseString='" + responseString + '\'' +
-                ", responseCode='" + responseCode + '\'' +
-                '}';
+    JuiceResponse(String responseString, String responseCode) {
+        this.responseString = responseString;
+        this.responseCode = responseCode;
+    }
+
+    public String getResponseString() {
+        return responseString;
+    }
+
+    public void setResponseString(String responseString) {
+        this.responseString = responseString;
+    }
+
+    public String getResponseCode() {
+        return responseCode;
+    }
+
+    public void setResponseCode(String responseCode) {
+        this.responseCode = responseCode;
     }
 }

@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 public class JuiceController {
     private JuiceRepository repository;
     private JuiceService service;
+    private JuiceResponse response;
 
     public JuiceController(JuiceRepository repository, JuiceService service) {
         this.repository = repository;
@@ -27,13 +28,24 @@ public class JuiceController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @CrossOrigin(origins = "http://localhost:3000")
-    public String goodJuiceService(@RequestBody JuiceRequest juiceRequest) {
-        String name = juiceRequest.getName();
-        Long id = juiceRequest.getId();
-        System.out.println("Request ***************");
-        System.out.println(id+", "+name);
-        service.handle(juiceRequest);
-        return "done";
+    public JuiceResponse goodJuiceService(@RequestBody JuiceRequest juiceRequest) {
+        service.handlePost(juiceRequest);
+        response = new JuiceResponse("ok","200");
+        return response;
+    }
+
+    @PutMapping
+    public JuiceResponse goodJuicePut(@RequestBody JuiceRequest juiceRequest) {
+        service.handleUpdate(juiceRequest);
+        response = new JuiceResponse("ok","200");
+        return response;
+    }
+
+    @DeleteMapping
+    public JuiceResponse goodJuiceDelete(@RequestBody JuiceRequest juiceRequest) {
+        service.handleDelete(juiceRequest);
+        response = new JuiceResponse("ok","200");
+        return response;
     }
 
     private boolean isGreat(Juice juice) {

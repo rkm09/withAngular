@@ -1,15 +1,8 @@
 package com.example.withAngular.juice;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class JuiceService {
@@ -19,18 +12,36 @@ public class JuiceService {
         this.repository = repository;
     }
 
-    public void handle(JuiceRequest juiceRequest) {
-        System.out.println("=======Handle this=======");
+    public void handlePost(JuiceRequest juiceRequest) {
         Juice juice = new Juice(juiceRequest.getId(), juiceRequest.getName());
-        System.out.println(juice);
         repository.save(juice);
-        repository.flush();
-        System.out.println("=======Handled this=======");
+    }
 
+    public void handleUpdate(JuiceRequest juiceRequest) {
+        Optional optionalJuice = repository.findById(juiceRequest.getId());
+        if(optionalJuice.isPresent()){
+            Juice juice = (Juice)optionalJuice.get();
+            juice.setName(juiceRequest.getName());
+            repository.save(juice);
+            repository.flush();
+        } else {
+            throw new juiceException("id not found");
+        }
+    }
+
+    public void handleDelete(JuiceRequest juiceRequest) {
+        Optional optionalJuice = repository.findById(juiceRequest.getId());
+        if(optionalJuice.isPresent()) {
+            Juice juice = (Juice) optionalJuice.get();
+            repository.delete(juice);
+        } else {
+            throw new juiceException("id not found");
+        }
     }
 
     @Override
     public String toString() {
         return "JuiceService{}";
     }
+
 }
