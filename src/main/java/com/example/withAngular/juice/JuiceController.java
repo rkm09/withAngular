@@ -27,7 +27,6 @@ public class JuiceController {
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    @CrossOrigin(origins = "http://localhost:3000")
     public JuiceResponse goodJuiceService(@RequestBody JuiceRequest juiceRequest) {
         service.handlePost(juiceRequest);
         response = new JuiceResponse("ok","200");
